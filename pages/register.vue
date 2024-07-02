@@ -1,30 +1,49 @@
 <script setup lang="ts">
+import { password } from '@formkit/icons';
+import axios from 'axios';
+
 definePageMeta({
-  layout: "centered",
+  layout: 'centered',
 });
+interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+const form = ref<RegisterRequest>({
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+});
+
+async function register(payload: RegisterRequest) {
+  const res = await axios.post('/api/register', payload);
+}
 </script>
 <template>
   <div class="register">
     <h1>Register</h1>
-    <form>
+    <form @submit.prevent="register(form)">
       <label>
         <div>Name</div>
-        <input type="text" />
+        <input type="text" v-model="form.name" />
       </label>
 
       <label>
         <div>Email</div>
-        <input type="email" />
+        <input type="email" v-model="form.email" />
       </label>
 
       <label>
         <div>Password</div>
-        <input type="password" />
+        <input type="password" v-model="form.password" />
       </label>
 
       <label>
         <div>Confirm Password</div>
-        <input type="password" />
+        <input type="password" v-model="form.password_confirmation" />
       </label>
 
       <button class="btn">Register</button>
