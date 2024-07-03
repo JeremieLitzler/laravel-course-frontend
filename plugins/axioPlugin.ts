@@ -7,5 +7,15 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   axios.defaults.headers.common['Accept'] = 'application/json';
   axios.defaults.withCredentials = true;
 
+  // thanks to https://github.com/axios/axios/issues/6047#issuecomment-1786785122
+  axios.interceptors.request.use((config) => {
+    const token = decodeURIComponent(
+      document.cookie.replace('XSRF-TOKEN=', '')
+    );
+    axios.defaults.headers['X-XSRF-TOKEN'] = token;
+
+    return config;
+  });
+
   await axios.get('/sanctum/csrf-cookie');
 });
