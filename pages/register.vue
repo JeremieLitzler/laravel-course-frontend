@@ -19,6 +19,11 @@ const form = ref<RegisterRequest>({
 });
 
 async function register(payload: RegisterRequest) {
+  console.log(
+    'register.vue > document.cookie > list',
+    document.cookie.split(';')
+  );
+
   const res = await axios.post('/api/register', payload);
 }
 </script>
