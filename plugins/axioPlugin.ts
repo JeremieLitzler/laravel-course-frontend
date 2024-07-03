@@ -7,6 +7,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   axios.defaults.headers.common['Accept'] = 'application/json';
   axios.defaults.withCredentials = true;
 
+  await axios.get('/sanctum/csrf-cookie');
+
   // thanks to https://github.com/axios/axios/issues/6047#issuecomment-1786785122
   axios.interceptors.request.use((config) => {
     console.log('interceptors > request', document.cookie);
@@ -19,6 +21,4 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     return config;
   });
-
-  await axios.get('/sanctum/csrf-cookie');
 });
