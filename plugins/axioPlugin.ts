@@ -9,6 +9,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   // thanks to https://github.com/axios/axios/issues/6047#issuecomment-1786785122
   axios.interceptors.request.use((config) => {
+    console.log('interceptors > request', document.cookie);
+    console.log('interceptors > request', document.cookie.split(';'));
+
     const token = decodeURIComponent(
       document.cookie.replace('XSRF-TOKEN=', '')
     );
